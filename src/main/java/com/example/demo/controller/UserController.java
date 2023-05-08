@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.EmployeeEntity;
+import com.example.demo.DTO.LoginDTO;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -25,18 +25,10 @@ public class UserController {
 
     @GetMapping("/get-user/{name}")
     public List<UserEntity> getUser(@PathVariable String name){
-        return userRepository.getUser1(name);
+        return null;
     }
+    
 
-    @GetMapping("/count")
-    public Long countUser(){
-        return userRepository.countUser();
-    }
-    @PostMapping("/insert")
-    public EmployeeEntity insertEmployee(@RequestBody EmployeeEntity employeeEntity){
-        userService.insertEmployee(employeeEntity);
-        return employeeEntity;
-    }
     @PostMapping("/register")
     public UserEntity insertUser(@RequestBody UserEntity userEntity)  {
         userService.insertUser(userEntity);
@@ -45,5 +37,10 @@ public class UserController {
     @PostMapping("/delete")
     public void deleteUser(@RequestBody Integer userId)  {
         userService.deleteUser(userId);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
+        return ResponseEntity.ok( userService.login(loginDTO));
     }
 }
