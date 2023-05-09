@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/schedule")
 public class ScheduleController {
     @Autowired
@@ -17,12 +18,14 @@ public class ScheduleController {
 
     @PostMapping("/dat-lich-kham")
     public void createSchedule(
-            @RequestParam Integer userId,
+            @RequestParam String userId,
+            @RequestParam String fullname,
             @RequestParam String phoneNumber,
             @RequestParam String note,
             @RequestParam LocalDateTime appointmentTime) {
-        scheduleService.createSchedule(userId, phoneNumber, note, appointmentTime);
+        scheduleService.createSchedule(Integer.parseInt(userId),fullname, phoneNumber, note, appointmentTime);
     }
+
     @PostMapping("/xac-nhan-lich-kham")
     public void confirmSchedule(@RequestBody Schedule schedule) {
         scheduleService.confirmSchedule(schedule);
@@ -48,4 +51,8 @@ public class ScheduleController {
         return scheduleService.getScheduleById(id);
     }
 
+    @GetMapping("/my-schedule")
+    public List<Schedule> getMySchedule(@RequestParam Integer userId){
+        return scheduleService.getMyScheduleByUserId(userId);
+    }
 }

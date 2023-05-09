@@ -18,4 +18,6 @@ public interface UserService {
     void updateUser(UserEntity userEntity);
 
     UserEntity login(LoginDTO loginDTO);
+
+    void editUser(UserEntity userEntity);
 }

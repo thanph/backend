@@ -49,7 +49,33 @@ public class UserServiceImpl implements UserService {
         if (optional.isPresent()) {
             return optional.get();
         } else {
-            return null;
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public void editUser(UserEntity userEntity) {
+        Optional<UserEntity> optional = userRepository.findById(userEntity.getId());
+        if (optional.isEmpty()) {
+            throw new RuntimeException();
+        } else {
+            UserEntity user = optional.get();
+            if (userEntity.getUsername() != null) {
+                user.setUsername(userEntity.getUsername());
+            }
+            if (userEntity.getPassword() != null) {
+                user.setPassword(userEntity.getPassword());
+            }
+            if (userEntity.getUserType() != null) {
+                user.setUserType(userEntity.getUserType());
+            }
+            if (userEntity.getEmail() != null) {
+                user.setEmail(userEntity.getEmail());
+            }
+            if (userEntity.getPhoneNumber() != null) {
+                user.setPhoneNumber(userEntity.getPhoneNumber());
+            }
+            userRepository.save(user);
         }
     }
 }

@@ -42,9 +42,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void createSchedule(Integer userId, String phoneNumber, String note, LocalDateTime appointmentTime) {
+    public void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDateTime appointmentTime) {
         Schedule schedule = new Schedule();
         schedule.setUserId(userId);
+        schedule.setFullname(fullname);
         schedule.setPhoneNumber(phoneNumber);
         schedule.setNote(note);
         schedule.setAppointmentTime(appointmentTime);
@@ -56,5 +57,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void confirmSchedule(Schedule schedule) {
         schedule.setStatus(1);
         scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public List<Schedule> getMyScheduleByUserId(Integer userId) {
+        List<Schedule> schedules = scheduleRepository.findScheduleByUserId(userId);
+        return schedules;
     }
 }

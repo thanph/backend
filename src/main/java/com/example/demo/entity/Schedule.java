@@ -21,6 +21,9 @@ public class Schedule {
     @Column(name = "user_id")
     private Integer userId;
 
+    @Column(name = "fullname")
+    private String fullname;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
