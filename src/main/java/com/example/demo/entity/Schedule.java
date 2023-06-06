@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,7 +32,7 @@ public class Schedule {
     private String note;
 
     @Column(name = "appointment_time")
-    private LocalDateTime appointmentTime;
+    private LocalDate appointmentTime;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

@@ -6,6 +6,7 @@ import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDateTime appointmentTime) {
+    public void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDate appointmentTime) {
         Schedule schedule = new Schedule();
         schedule.setUserId(userId);
         schedule.setFullname(fullname);

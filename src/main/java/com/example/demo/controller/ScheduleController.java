@@ -5,6 +5,7 @@ import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ScheduleController {
             @RequestParam String fullname,
             @RequestParam String phoneNumber,
             @RequestParam String note,
-            @RequestParam LocalDateTime appointmentTime) {
+            @RequestParam LocalDate appointmentTime) {
         scheduleService.createSchedule(Integer.parseInt(userId),fullname, phoneNumber, note, appointmentTime);
     }
 
