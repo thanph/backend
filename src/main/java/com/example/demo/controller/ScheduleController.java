@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Schedule;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,13 +24,16 @@ public class ScheduleController {
             @RequestParam String fullname,
             @RequestParam String phoneNumber,
             @RequestParam String note,
-            @RequestParam LocalDate appointmentTime) {
-        scheduleService.createSchedule(Integer.parseInt(userId),fullname, phoneNumber, note, appointmentTime);
+            @RequestParam LocalDate appointmentTime,
+            @RequestParam Integer timeSlot
+
+    ) {
+        scheduleService.createSchedule(Integer.parseInt(userId),fullname, phoneNumber, note, appointmentTime,timeSlot);
     }
 
-    @PostMapping("/xac-nhan-lich-kham")
-    public void confirmSchedule(@RequestBody Schedule schedule) {
-        scheduleService.confirmSchedule(schedule);
+    @PostMapping("/xac-nhan-lich-kham/{scheduleId}")
+    public void confirmSchedule(@PathVariable Integer scheduleId) {
+        scheduleService.confirmSchedule(scheduleId);
     }
 
     @PutMapping("/sua-lich-kham")
@@ -55,5 +59,10 @@ public class ScheduleController {
     @GetMapping("/my-schedule")
     public List<Schedule> getMySchedule(@RequestParam Integer userId){
         return scheduleService.getMyScheduleByUserId(userId);
+    }
+
+    @GetMapping("")
+    public List<Integer> getListTimeSlot(@RequestParam LocalDate ngayHen){
+        return  scheduleService.getListTimeSlot(ngayHen);
     }
 }

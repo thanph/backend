@@ -4,6 +4,7 @@ import com.example.demo.entity.Schedule;
 import com.example.demo.repository.ScheduleRepository;
 import com.example.demo.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,7 +29,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<Schedule> getAllSchedule() {
-        List<Schedule> list = scheduleRepository.findAll();
+        Sort sort =
+//                Sort.by("status").ascending();
+        Sort.by(Sort.Direction.ASC, "status")
+                .and(Sort.by(Sort.Direction.DESC, "createdAt"));// Hoặc Sort.by(fieldName).descending() nếu muốn sắp xếp giảm dần
+        List<Schedule> list = scheduleRepository.findAll(sort);
         return list;
     }
 
@@ -43,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDate appointmentTime) {
+    public void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDate appointmentTime,Integer timeSlot) {
         Schedule schedule = new Schedule();
         schedule.setUserId(userId);
         schedule.setFullname(fullname);
@@ -51,18 +56,29 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setNote(note);
         schedule.setAppointmentTime(appointmentTime);
         schedule.setStatus(0);
+        schedule.setTimeSlot(timeSlot);
         scheduleRepository.save(schedule);
     }
 
     @Override
-    public void confirmSchedule(Schedule schedule) {
-        schedule.setStatus(1);
+    public void confirmSchedule(Integer scheduleId) {
+      Optional<Schedule> optionalSchedule =  scheduleRepository.findById(scheduleId);
+      Schedule schedule = optionalSchedule.get();
+      schedule.setStatus(1);
         scheduleRepository.save(schedule);
     }
 
     @Override
     public List<Schedule> getMyScheduleByUserId(Integer userId) {
-        List<Schedule> schedules = scheduleRepository.findScheduleByUserId(userId);
+        Sort sort = Sort.by("status").ascending();
+        List<Schedule> schedules = scheduleRepository.findScheduleByUserId(sort,userId);
         return schedules;
+    }
+
+    @Override
+    public List<Integer> getListTimeSlot(LocalDate ngayHen) {
+            List<Integer> integerList = scheduleRepository.findAllTimeSlotByNgayHen(ngayHen);
+
+        return integerList;
     }
 }

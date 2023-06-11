@@ -34,6 +34,9 @@ public class Schedule {
     @Column(name = "appointment_time")
     private LocalDate appointmentTime;
 
+    @Column(name = "time_slot")
+    private Integer timeSlot;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 

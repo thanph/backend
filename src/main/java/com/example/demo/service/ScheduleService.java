@@ -16,9 +16,11 @@ public interface ScheduleService {
 
     Schedule getScheduleById(Integer id);
 
-    void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDate appointmentTime);
+    void createSchedule(int userId,String fullname, String phoneNumber, String note, LocalDate appointmentTime,Integer timeSlot);
 
-    void confirmSchedule(Schedule schedule);
+    void confirmSchedule(Integer scheduleId);
 
     List<Schedule> getMyScheduleByUserId(Integer userId);
+
+    List<Integer> getListTimeSlot(LocalDate ngayHen);
 }
